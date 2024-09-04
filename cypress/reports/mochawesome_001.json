@@ -1,0 +1,143 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 3,
+    "passes": 3,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-09-04T09:05:38.118Z",
+    "end": "2024-09-04T09:05:38.515Z",
+    "duration": 397,
+    "testsRegistered": 3,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "283a96dd-c373-45cd-88a2-d5ff4e77c42b",
+      "title": "",
+      "fullFile": "cypress/e2e/negativeTestCases.spec.js",
+      "file": "cypress/e2e/negativeTestCases.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "f374f0bb-0761-41fa-84f1-8f8d9fe5f83d",
+          "title": "Kablamo API Error Handling Negative Test suite",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "400 Bad Request",
+              "fullTitle": "Kablamo API Error Handling Negative Test suite 400 Bad Request",
+              "timedOut": null,
+              "duration": 129,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.request({\n  method: \"GET\",\n  url: `${Cypress.env(\"baseUrl\")}lists/groups/json/invalidParam=%XXX`,\n  failOnStatusCode: false\n}).then(response => {\n  (0, _assertResponse.validateResponse)(response, 400, [], false);\n});",
+              "err": {},
+              "uuid": "6624e208-d395-4c8b-8712-b46c00665178",
+              "parentUUID": "f374f0bb-0761-41fa-84f1-8f8d9fe5f83d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "404 Not Found : invalid query parameters",
+              "fullTitle": "Kablamo API Error Handling Negative Test suite 404 Not Found : invalid query parameters",
+              "timedOut": null,
+              "duration": 185,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// passing invalid url to generate 404 bad request\ncy.GETrequest(\"list/groups/json\").then(response => {\n  // Validate the response using the validateResponse function\n  (0, _assertResponse.validateResponse)(response, 404, [], false);\n});",
+              "err": {},
+              "uuid": "ab0e7452-b7f3-4af3-af85-e33ab2f204e0",
+              "parentUUID": "f374f0bb-0761-41fa-84f1-8f8d9fe5f83d",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "403 Method Not Allowed : unsupported HTTP methods",
+              "fullTitle": "Kablamo API Error Handling Negative Test suite 403 Method Not Allowed : unsupported HTTP methods",
+              "timedOut": null,
+              "duration": 35,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// performing delete action to get 403 response code\ncy.request({\n  method: \"DELETE\",\n  url: `${Cypress.env(\"baseUrl\")}/lists/groups/json`,\n  failOnStatusCode: false\n}).then(response => {\n  (0, _assertResponse.validateResponse)(response, 403, [], false);\n});",
+              "err": {},
+              "uuid": "3d1e064e-3488-4649-9030-5b321a0faa02",
+              "parentUUID": "f374f0bb-0761-41fa-84f1-8f8d9fe5f83d",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "6624e208-d395-4c8b-8712-b46c00665178",
+            "ab0e7452-b7f3-4af3-af85-e33ab2f204e0",
+            "3d1e064e-3488-4649-9030-5b321a0faa02"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 349,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}

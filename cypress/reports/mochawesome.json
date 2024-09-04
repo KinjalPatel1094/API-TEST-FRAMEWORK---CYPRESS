@@ -1,0 +1,162 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 4,
+    "passes": 4,
+    "pending": 0,
+    "failures": 0,
+    "start": "2024-09-04T09:05:36.567Z",
+    "end": "2024-09-04T09:05:37.237Z",
+    "duration": 670,
+    "testsRegistered": 4,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "633ec484-4c08-4122-a3e2-d2788decfe30",
+      "title": "",
+      "fullFile": "cypress/e2e/apiTestCases.spec.js",
+      "file": "cypress/e2e/apiTestCases.spec.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "5f7ce273-3a93-450e-a91b-c5aa57ad0248",
+          "title": "Kablamo API TestSuite",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "API request to get lists of available Groups",
+              "fullTitle": "Kablamo API TestSuite API request to get lists of available Groups",
+              "timedOut": null,
+              "duration": 514,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.GETrequest(\"lists/groups/json\").then(response => {\n  (0, _assertResponse.validateResponse)(response, 200, [\"terms\", \"groups\"], true);\n  //const groups = response.body.groups;\n  const groupNames = Object.keys(response.body.groups);\n  //const groupName = groupNames[0];\n  //API request to get details associated to specific Group by its name and all the series it contains.\n  const groupName = \"FX_RATES_DAILY\";\n  if (groupNames.includes(groupName)) {\n    cy.GETrequest(`groups/${groupName}/json`).then(secondResponse => {\n      // Assertions for the second response\n      (0, _assertResponse.validateResponse)(secondResponse, 200, [\"terms\", \"groupDetails\"], true);\n      // API request to get observations of a Group of series , filtered by a groupname.\n      cy.GETrequest(`observations/group/${groupName}/json?recent_weeks=10`).then(thirdResponse => {\n        // Assertions for the third response\n        (0, _assertResponse.validateResponse)(thirdResponse, 200, [\"groupDetail\", \"terms\", \"seriesDetail\"], true);\n      });\n    });\n  } else {\n    throw new Error(`Group name \"${groupName}\" not found in the response`);\n  }\n});",
+              "err": {},
+              "uuid": "16f3fcea-5f51-43aa-bdd9-89cb271f79c8",
+              "parentUUID": "5f7ce273-3a93-450e-a91b-c5aa57ad0248",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "API request to get details associated to a series",
+              "fullTitle": "Kablamo API TestSuite API request to get details associated to a series",
+              "timedOut": null,
+              "duration": 29,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.GETrequest(\"series/FXAUDCAD/json\").then(response => {\n  // passing bodyproperties as object to validate values.\n  const bodyProperties = {\n    terms: {\n      url: \"https://www.bankofcanada.ca/terms/\"\n    },\n    seriesDetails: {\n      name: \"FXAUDCAD\",\n      label: \"AUD/CAD\"\n    }\n  };\n  (0, _assertResponse.validateResponse)(response, 200, bodyProperties, true);\n});",
+              "err": {},
+              "uuid": "fdc1403f-a72a-4b82-9eaa-9c0943b3440c",
+              "parentUUID": "5f7ce273-3a93-450e-a91b-c5aa57ad0248",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "API request to get observations filtered by a SeriesName",
+              "fullTitle": "Kablamo API TestSuite API request to get observations filtered by a SeriesName",
+              "timedOut": null,
+              "duration": 32,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// Find average forex conversion rate for different currencypairs by passing different values here.\n// FXCADAUD will find the average Forex conversion rate, \"CAD to AUD,\" for the recent 10 weeks\nconst currencyPair = \"FXCADAUD\";\ncy.GETrequest(\"observations/FXCADAUD/json?recent_weeks=10\").then(response => {\n  (0, _assertResponse.validateResponse)(response, 200, [\"terms\", \"seriesDetail\", \"observations\"], true);\n  // Calling function created in support/calculateAverage.js to find the average rate.\n  (0, _calculateAverage.averageForexRate)(response, currencyPair);\n});",
+              "err": {},
+              "uuid": "5e7ff85e-b532-493b-b46c-11f229e980d4",
+              "parentUUID": "5f7ce273-3a93-450e-a91b-c5aa57ad0248",
+              "isHook": false,
+              "skipped": false
+            },
+            {
+              "title": "API test to get most recent observation for all exchange rates",
+              "fullTitle": "Kablamo API TestSuite API test to get most recent observation for all exchange rates",
+              "timedOut": null,
+              "duration": 51,
+              "state": "passed",
+              "speed": "fast",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "cy.GETrequest(\"fx_rss\").then(response => {\n  (0, _assertResponse.validateXMLResponse)(response);\n  // using JavaScript's DOMParser to validate XML response body\n  /*const parser = new DOMParser();\n  const xmlDoc = parser.parseFromString(response.body, \"application/xml\");\n  expect(xmlDoc.documentElement).to.exist;*/\n});\n// API request to get exchange rate observations filtered by SeriesName.\ncy.GETrequest(\"fx_rss/FXAUDCAD\").then(response => {\n  (0, _assertResponse.validateXMLResponse)(response);\n});",
+              "err": {},
+              "uuid": "a91affb7-c741-4c76-aec6-0d026424df95",
+              "parentUUID": "5f7ce273-3a93-450e-a91b-c5aa57ad0248",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "16f3fcea-5f51-43aa-bdd9-89cb271f79c8",
+            "fdc1403f-a72a-4b82-9eaa-9c0943b3440c",
+            "5e7ff85e-b532-493b-b46c-11f229e980d4",
+            "a91affb7-c741-4c76-aec6-0d026424df95"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 626,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.0.1"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": false,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.3"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/reports",
+        "overwrite": false,
+        "html": false,
+        "json": true
+      },
+      "version": "6.2.0"
+    }
+  }
+}
